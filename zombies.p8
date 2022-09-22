@@ -7,19 +7,69 @@ b_left, b_right, b_up, b_down, b_o, b_x = 0,1,2,3,4,5
 
 --init
 function _init()
+	initpeople()
+	initbuildings()
+end
 
+function initpeople()
+	people={}
+	for i=1,10 do
+		local p={}
+		initperson(p)
+		add(people, p)
+	end
+end
+
+function initperson(p)
+	p.x=rnd(64)
+	p.y=rnd(64)
+	p.color=white
+end
+
+function initbuildings()
+	buildings={}
+	for i=1,10 do
+		local b={}
+		initbuilding(b)
+		add(buildings,b)
+	end
+end
+
+function initbuilding(b)
+	b.x=rnd(64)
+	b.y=rnd(64)
+	b.w=8
+	b.h=8
+	b.color=blue
 end
 
 --update
 function _update()
-	
+	updatepeople()	
+end
+
+function updatepeople()
+
 end
 
 --draw
 function _draw()
 	 cls()
+	 drawpeople()
+	 drawbuildings()
 end
 
+function drawpeople()
+	for p in all(people) do
+		pset(p.x, p.y, p.color)
+	end
+end
+
+function drawbuildings()
+	for b in all(buildings) do
+		rect(b.x, b.y, b.x+b.w, b.y+b.h, b.color)
+	end
+end
 --util
 function ispointinbox(point, box)
 	return (point.x >= box.x and point.x <= box.x+box.w) and
